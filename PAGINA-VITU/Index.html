@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Profesional Infográfico | Robin Jackson</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Palette: Vibrant Professional Blue/Amber (Tailwind Indigo, Sky, Amber, Rose) -->
+    <!-- CONFIRMATION: NEITHER Mermaid JS NOR SVG were used anywhere in the output. -->
+    <!-- Plan: Hero -> Skills Radar -> Experience Sectors (Donut) -> Timeline (HTML) -> Education/Courses (Bar). -->
+    <!-- Choices: Skills -> Relationships -> Radar (Chart.js). Sectors -> Compare -> Donut (Chart.js). Courses -> Compare -> Bar (Chart.js). Timeline -> Organize -> HTML/CSS. NO SVG. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-indigo-200 selection:text-indigo-900">
+
+    <nav class="sticky top-0 z-50 bg-indigo-900 shadow-lg border-b border-indigo-700">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="text-white font-bold text-xl tracking-tight">ROBIN JACKSON</div>
+            <div class="hidden md:flex space-x-6 text-indigo-100 text-sm font-medium">
+                <a href="#perfil" class="hover:text-amber-400 transition-colors">Perfil</a>
+                <a href="#habilidades" class="hover:text-amber-400 transition-colors">Habilidades</a>
+                <a href="#experiencia" class="hover:text-amber-400 transition-colors">Experiencia</a>
+                <a href="#educacion" class="hover:text-amber-400 transition-colors">Educación</a>
+            </div>
+        </div>
+    </nav>
+
+    <header id="perfil" class="bg-gradient-to-br from-indigo-900 to-indigo-700 text-white py-16 md:py-24">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Ingeniero Industrial <span class="text-amber-400">&</span> Especialista en Operaciones</h1>
+                <p class="text-lg text-indigo-100 mb-8 leading-relaxed">
+                    Profesional universitario capacitado para ejecutar tareas de calidad, logística, toma de decisiones y análisis de riesgo. Líder nato con disposición para el trabajo en equipo, optimización de procesos y resolución efectiva de problemas.
+                </p>
+                <div class="flex flex-wrap gap-4 text-sm font-medium text-indigo-900">
+                    <span class="bg-amber-400 px-4 py-2 rounded-full shadow-md">⚙️ Optimización de Procesos</span>
+                    <span class="bg-sky-400 px-4 py-2 rounded-full shadow-md">🛡️ Control SIAHO</span>
+                    <span class="bg-rose-400 px-4 py-2 rounded-full shadow-md text-white">🤝 Atención al Cliente</span>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-8 shadow-2xl text-slate-800 transform hover:-translate-y-1 transition-transform">
+                <h2 class="text-2xl font-bold border-b border-slate-200 pb-4 mb-6">Contacto Rápidο</h2>
+                <ul class="space-y-4 text-slate-600">
+                    <li class="flex items-center"><span class="text-2xl mr-3 text-indigo-600">📱</span> +57 302 516 47 43 / +58 414 653 79 33</li>
+                    <li class="flex items-center"><span class="text-2xl mr-3 text-indigo-600">📧</span> robin.jackson911@gmail.com</li>
+                    <li class="flex items-start"><span class="text-2xl mr-3 text-indigo-600 mt-1">📍</span> <span>Maracaibo, Edo. Zulia - Venezuela</span></li>
+                    <li class="flex items-center"><span class="text-2xl mr-3 text-indigo-600">🇻🇪</span> Nacionalidad Venezolana</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-12 space-y-20">
+
+        <section id="habilidades" class="pt-8">
+            <div class="mb-10 text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Competencias Fundamentales</h2>
+                <p class="text-slate-600 text-lg">
+                    Un perfil híbrido que combina el rigor técnico de la ingeniería industrial, inspecciones de seguridad e informes técnicos, con fuertes habilidades interpersonales desarrolladas en la gestión integral de restaurantes y servicio directo al cliente.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+                <div class="chart-container">
+                    <canvas id="skillsRadarChart"></canvas>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-indigo-50 p-6 rounded-xl border-l-4 border-indigo-500">
+                        <h3 class="font-bold text-indigo-900 text-lg mb-2">Operaciones y Logística</h3>
+                        <p class="text-slate-600 text-sm">Capacidad comprobada en gestión de inventarios, supervisión de actividades diarias y disponibilidad óptima de materiales en múltiples sectores.</p>
+                    </div>
+                    <div class="bg-sky-50 p-6 rounded-xl border-l-4 border-sky-500">
+                        <h3 class="font-bold text-sky-900 text-lg mb-2">SIAHO y Calidad</h3>
+                        <p class="text-slate-600 text-sm">Inspecciones técnicas en instalaciones industriales, cumplimiento estricto de normativas y protocolos de inocuidad e higiene.</p>
+                    </div>
+                    <div class="bg-amber-50 p-6 rounded-xl border-l-4 border-amber-500">
+                        <h3 class="font-bold text-amber-900 text-lg mb-2">Servicio y Resolución</h3>
+                        <p class="text-slate-600 text-sm">Excelencia en atención al cliente, gestión integral de establecimientos y toma de decisiones para ejecutar acciones correctivas en tiempo real.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experiencia" class="pt-8">
+            <div class="mb-10 max-w-3xl">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Trayectoria Profesional</h2>
+                <p class="text-slate-600 text-lg">
+                    La carrera de Robin destaca por una adaptabilidad excepcional, migrando con éxito entre posiciones técnicas de control en la industria petrolera y de transporte, hacia el liderazgo en emprendimiento comercial y gestión de servicios gastronómicos.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                
+                <div class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-center">
+                    <h3 class="text-xl font-bold text-center text-slate-800 mb-6">Distribución por Sector</h3>
+                    <div class="chart-container" style="height: 280px;">
+                        <canvas id="sectorDonutChart"></canvas>
+                    </div>
+                    <p class="text-center text-sm text-slate-500 mt-4 px-4">
+                        El gráfico ilustra el balance entre la rigurosidad del sector industrial y el dinamismo del área de servicios y emprendimiento.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <div class="relative border-l-4 border-indigo-200 pl-6 space-y-10 py-4">
+                        
+                        <div class="relative">
+                            <div class="absolute -left-8 top-1 w-6 h-6 bg-indigo-600 rounded-full border-4 border-white shadow-sm"></div>
+                            <h4 class="text-xl font-bold text-slate-900">Artist Sub</h4>
+                            <p class="text-indigo-600 font-semibold mb-2">S UB WAY, Villavicencio | Dic 2023 – Ene 2026</p>
+                            <ul class="text-slate-600 text-sm space-y-2 list-none">
+                                <li>• Atención al cliente y preparación de pedidos siguiendo estrictos protocolos de calidad.</li>
+                                <li>• Manejo de inventarios, limpieza, orden y cumplimiento de BPM (Buenas Prácticas de Manufactura).</li>
+                            </ul>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-8 top-1 w-6 h-6 bg-amber-500 rounded-full border-4 border-white shadow-sm"></div>
+                            <h4 class="text-xl font-bold text-slate-900">Emprendimiento Local de Comidas</h4>
+                            <p class="text-amber-600 font-semibold mb-2">Independiente, Villavicencio | Dic 2018 – Nov 2023</p>
+                            <ul class="text-slate-600 text-sm space-y-2 list-none">
+                                <li>• Gestión integral operativa, logística y de calidad de servicio del restaurante.</li>
+                                <li>• Control minucioso de inventarios y capacitación del personal en higiene alimentaria.</li>
+                            </ul>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-8 top-1 w-6 h-6 bg-sky-500 rounded-full border-4 border-white shadow-sm"></div>
+                            <h4 class="text-xl font-bold text-slate-900">Controlador Centro Operaciones / Supervisor / Inspector</h4>
+                            <p class="text-sky-600 font-semibold mb-2">Metro de Maracaibo / Comapetca / Nabors | 2015 – 2018</p>
+                            <ul class="text-slate-600 text-sm space-y-2 list-none">
+                                <li>• Supervisión en tiempo real mediante sistemas SCADA, gestión de equipos y mantenimiento.</li>
+                                <li>• Inspecciones técnicas, control de inventarios de materiales y promoción de la cultura preventiva.</li>
+                            </ul>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-8 top-1 w-6 h-6 bg-slate-400 rounded-full border-4 border-white shadow-sm"></div>
+                            <h4 class="text-xl font-bold text-slate-900">Aprendiz Electricidad Mantenimiento</h4>
+                            <p class="text-slate-600 font-semibold mb-2">PDVSA CIED ORT, Anaco | Oct 2000 – Feb 2003</p>
+                            <ul class="text-slate-600 text-sm space-y-2 list-none">
+                                <li>• Mantenimiento preventivo básico en motores y tableros bajo estrictas normas de seguridad.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="educacion" class="pt-8 pb-16">
+            <div class="mb-10 text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Formación y Desarrollo Continuo</h2>
+                <p class="text-slate-600 text-lg">
+                    Sólida base académica tecnológica y de ingeniería, respaldada por capacitación focalizada en seguridad laboral, auditoría de calidad y logística integral para fortalecer la toma de decisiones.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                
+                <div class="space-y-4">
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-indigo-600">
+                        <div class="text-2xl mb-2">🎓</div>
+                        <h4 class="text-lg font-bold text-slate-900">Ingeniero Industrial</h4>
+                        <p class="text-slate-500">URBE, Venezuela | 2015</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-sky-500">
+                        <div class="text-2xl mb-2">💻</div>
+                        <h4 class="text-lg font-bold text-slate-900">Técnico Superior en Electrónica</h4>
+                        <p class="text-slate-500">UNIR, Venezuela | 2006</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-slate-500">
+                        <div class="text-2xl mb-2">⚡</div>
+                        <h4 class="text-lg font-bold text-slate-900">Técnico Electricista Mantenimiento</h4>
+                        <p class="text-slate-500">PDVSA CIED, Venezuela | 2003</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">Cursos de Especialización</h3>
+                        <p class="text-sm text-slate-500 mb-8">Volumen de horas de formación por área clave de competencia.</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="coursesBarChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm">
+        <div class="max-w-6xl mx-auto px-4">
+            <p>Infografía de Perfil Profesional interactiva generada con bases en currículum vitae estructurado.</p>
+            <p class="mt-2">Robin Jackson &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        function processLabel(label) {
+            const limit = 16;
+            if (label.length <= limit) return label;
+            
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            
+            words.forEach(word => {
+                if ((currentLine + word).length > limit) {
+                    if (currentLine.trim()) lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else {
+                    currentLine += word + ' ';
+                }
+            });
+            if (currentLine.trim()) lines.push(currentLine.trim());
+            return lines;
+        }
+
+        const commonTooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    }
+                    return label;
+                }
+            }
+        };
+
+        const radarLabels = ['Operaciones y Logística', 'Inspecciones de Riesgo (SIAHO)', 'Gestión Atención al Cliente', 'Mantenimiento Industrial', 'Resolución de Problemas'].map(processLabel);
+        new Chart(document.getElementById('skillsRadarChart').getContext('2d'), {
+            type: 'radar',
+            data: {
+                labels: radarLabels,
+                datasets: [{
+                    label: 'Nivel de Experiencia',
+                    data: [90, 85, 95, 75, 90],
+                    backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                    borderColor: 'rgba(79, 70, 229, 1)',
+                    pointBackgroundColor: 'rgba(245, 158, 11, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(245, 158, 11, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: { display: false },
+                        grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                        pointLabels: {
+                            font: { family: 'Inter', size: 12, weight: '600' },
+                            color: '#334155'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: commonTooltipConfig
+                }
+            }
+        });
+
+        const donutLabels = ['Sector Industrial y Control', 'Emprendimiento y Servicios'].map(processLabel);
+        new Chart(document.getElementById('sectorDonutChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: donutLabels,
+                datasets: [{
+                    data: [5, 7],
+                    backgroundColor: [
+                        'rgba(14, 165, 233, 0.8)',
+                        'rgba(245, 158, 11, 0.8)'
+                    ],
+                    borderColor: ['#ffffff', '#ffffff'],
+                    borderWidth: 2,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '65%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { font: { family: 'Inter', size: 13 } }
+                    },
+                    tooltip: commonTooltipConfig
+                }
+            }
+        });
+
+        const barLabels = ['Logística Integral', 'SG - SST', 'Auditor Interno SIAHO'].map(processLabel);
+        new Chart(document.getElementById('coursesBarChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: barLabels,
+                datasets: [{
+                    label: 'Horas de Certificación',
+                    data: [160, 50, 24],
+                    backgroundColor: [
+                        'rgba(79, 70, 229, 0.8)',
+                        'rgba(14, 165, 233, 0.8)',
+                        'rgba(244, 63, 94, 0.8)'
+                    ],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(0, 0, 0, 0.05)', drawBorder: false },
+                        title: { display: true, text: 'Horas' }
+                    },
+                    x: {
+                        grid: { display: false, drawBorder: false },
+                        ticks: { font: { family: 'Inter', size: 11 } }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: commonTooltipConfig
+                }
+            }
+        });
+    </script>
+</body>
+</html>
